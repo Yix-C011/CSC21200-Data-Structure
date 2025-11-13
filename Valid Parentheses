@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool isValid (string s) {
+        string stack; // Declare stack as a string
+        // The loop would run through the string letter by letter
+        for (char current_char: s) { // Put char into stack if char is a left bracket
+            if (current_char == '(' || current_char == '[' || current_char == '{') {
+                stack.push_back(current_char);
+            }
+            // Check the string is empty and if it is a pair
+            else if (stack.empty() || !(is_pair(stack.back(), current_char))) { 
+                return false; // Returns false if not a pair
+            }
+            else { 
+                // If the right bracket matches with the left bracket then pop_back() removes the last bracket
+                stack.pop_back();
+            }
+        }
+        // If every char have been removed then this returns true
+        return stack.empty();
+    }
+private:
+    bool is_pair (char left_bracket, char right_bracket) {           // If left and right bracket are a pair returns true
+        return ((left_bracket == '[' && right_bracket == ']') ||     // else returns false
+                (left_bracket == '{' && right_bracket == '}') ||
+                (left_bracket == '(' && right_bracket == ')') );
+        }
+};
+// Big-O Notation: O(N) because the for loop append to the stack and goes over each char in the string one at a time to check each char in the stack
