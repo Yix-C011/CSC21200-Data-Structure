@@ -1,2 +1,2 @@
 # CSC21200-Data-Structure
-LeetCode Problems 
+Solutions to LeetCode Problems 
