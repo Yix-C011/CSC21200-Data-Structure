@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) { 
+        stack<int> stack; // Declare integer stack to store the numbers
+        for ( const auto& t : tokens) { // Going through each token in the vector, without changing it
+            if (t.size() > 1 || isdigit(t[0])) { // If token is a number
+                stack.push(stoi(t)); // stoi converts the token from string to int, then push onto stack
+            }
+            else { // If token is a operator   
+                int sec_num = stack.top(); // To store the second number which is the first number on top of stack 
+                stack.pop(); // Remove top number
+                int first_num = stack.top(); // To store the first number which is below the second number
+                stack.pop();
+                // Perform operation if t[0] equals to specific operation, 
+                // t[0] is not asking for the first index but instead is referencing to the current index in the loop
+                if (t[0] == '*') { 
+                    stack.push(first_num * sec_num); // Push the product into the stack
+                }
+                else if (t[0] == '+') {
+                    stack.push(first_num + sec_num); // Push the sum into the stack
+                }
+                else if (t[0] == '-') {
+                    stack.push(first_num - sec_num); // Push the difference into the stack
+                }
+                else if (t[0] == '/') {
+                    stack.push(first_num / sec_num); // Push the quotient into the stack
+                }
+            }
+        }
+        return stack.top(); // Only one number will remain which will be the final answer
+    }
+};
+
+// Big-O Notation would be O(n) because the loop is iterating through each token and the space conplexity would also be O(n), the worst case is that all the operations will be at the beginning which would lead to O((n+1)/2) which is O(n)
