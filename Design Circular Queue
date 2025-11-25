@@ -1,0 +1,80 @@
+class MyCircularQueue {
+
+public:
+    MyCircularQueue(int k) {
+        front_index = 0;
+        capacity = k; // Maximum capacity
+        q = vector<int>(k); // Initialize q as a vector with size k
+        size = 0; // Occupied space
+    }
+// 1
+    bool enQueue(int value) {
+        if (isFull()) { // Call the full function to check if the size reached the capacity, returns false
+            return false;
+        }
+        int rear_index = (front_index + size) % capacity; // The rear index increases by one as new values are inserted, the index is between [0,2]
+        q[rear_index] = value; // New value goes to the rear_index
+        size++; // Increase size by one
+        return true;
+        
+    }
+    
+    bool deQueue() { 
+        if (isEmpty()) { // Call the isEmpty function to check if the list is empty
+            return false;
+        }
+        
+        front_index = (front_index + 1) % capacity; // The front index is moved by one, meaning the old values at the front index is removed
+        size--; // Decrease size by one
+        return true;
+    }
+    
+    int Front() {
+        if (isEmpty()) {
+            return -1;
+        }
+        else {
+            return q[front_index]; // Return the value at the front index
+        }
+    }
+    
+    int Rear() {
+        int rear_index = (front_index + size - 1) % capacity; 
+        if (isEmpty()) {
+            return -1;
+        }
+        else {
+            return q[rear_index]; // Return the value at the rear, the last value inserted into the queue
+        } 
+    }
+    
+    bool isEmpty() {
+        return size == 0; // Return true if size is equal to 0
+    }
+    
+    bool isFull() {
+        return size == capacity; // Return true if size is equal to the capacity
+    }
+    
+private: 
+    int front_index;
+    int capacity;
+    int size;
+    vector<int> q; // Declare vector q
+};
+
+/**
+ * Your MyCircularQueue object will be instantiated and called as such:
+ * MyCircularQueue* obj = new MyCircularQueue(k);
+ * bool param_1 = obj->enQueue(value);
+ * bool param_2 = obj->deQueue();
+ * int param_3 = obj->Front();
+ * int param_4 = obj->Rear();
+ * bool param_5 = obj->isEmpty();
+ * bool param_6 = obj->isFull();
+ */
+ 
+ // The Big-O is O(1) because there are no for loop and everything is running with a constant number of operations.
+ // The space complexity is O(k) because k is the maximum capacity for the vector
+
+ 
