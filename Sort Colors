@@ -1,0 +1,45 @@
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int count0 = 0;
+        int count1 = 0;
+        int count2 = 0;
+        int size = nums.size();
+        
+        // Count the numbers 1, 0 and 2.
+        for (int i = 0; i < size ; i++){
+            if(nums[i] == 0 ) { // If the number at index i is equal to 0, increase the count of 0
+                count0++;
+            }
+            else if (nums[i] == 1) { // If the number at index i is equal to 1, increase the count of 1
+                count1++;
+            }
+            else { // If the number at index i is equal to 2, increase the count of 2
+                count2++;
+            }
+        }
+        
+        // Replace
+        for (int i = 0; i < size; i++ ) {
+            if (count0 != 0) { // Replace the number at the index with 0 if the count is more than zero
+                nums[i] = 0;
+                count0--; // Decrease the count so the loop can move on to the next number
+            }
+            else if (count1 != 0 ) { // Replace the number at the index with 1 if the count is more than zero
+                nums[i] = 1;
+                count1--;
+            }
+            else if (count2 != 0) { // Replace the number at the index with 2 if the count is more than zero
+                nums[i] = 2;
+                count2--;
+            }
+        }
+    }
+};
+
+
+// The Big-O is O(n) because there are two for loops, not nested, so it would be O(n).
+
+// The space complexity is O(1) because we only used three variable for the algorithm which does not change the size of the vector overall.
+
+// Follow up: We can use one while loop and two pointers, one left pointer and one right pointer. The for loop checks if the number at index i is 0 then swap the number for left pointer and current index, also increase tne left pointer and current index. If the number at index i is 1, i++. If the number is 2, swap the number at current index with the right pointer, then decrease the right pointer.
