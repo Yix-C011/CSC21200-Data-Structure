@@ -1,0 +1,46 @@
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) { 
+        int right = nums.size() - 1; // Initialize right and left                        
+        int left = 0;
+        vector<int> index{-1,-1};
+        // Finding starting position, first binary search
+        while (left <= right) {
+            int midIndex = (right + left) / 2; // right + left would keep the target between them, and then divide by two 
+            if (nums[midIndex] == target) { // If the middle value is the target, then the starting position is stored in the vector
+                index[0] = midIndex;
+                right = midIndex - 1; // Decrease right index by 1 to check if there are other starting position in the early indexes
+            }
+            else if (nums[midIndex] < target) { // if less than target, left becomes the beginning of right boundary to search the right side
+                left = midIndex + 1;
+            }
+            else { // else if greater than target, right becomes the end of left boundary to search the left side
+                right = midIndex - 1;
+            }
+        }
+        
+        // Finding final position, second binary search
+        right = nums.size() - 1;                           
+        left = 0;
+        
+        while (left <= right) {
+            int midIndex = (right + left) / 2;
+            if (nums[midIndex] == target) { // If the middle value is the target, then the ending position is stored in the vector
+                index[1] = midIndex;
+                left = midIndex + 1; // Increase right index by 1 to check if there are other ending position in the latter indexes
+            }
+            else if (nums[midIndex] < target) { // if less than target, left becomes the beginning of right boundary to search the right side
+                left = midIndex + 1;
+            }
+            else { // else if greater than target, right becomes the end of left boundary to search the left side
+                right = midIndex - 1;
+            }
+        }
+        return index; // Return the vector with the stored positions
+    }
+};
+
+// The big O-Notation is O(log n) since we are using two binary searches and the midIndex is divide by half every time.
+// The space complexity is O(1) because only a constant amount of extra space is used like the pointers.
+
+
