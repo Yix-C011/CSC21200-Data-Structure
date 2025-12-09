@@ -1,0 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        // If the root is empty or match p and q, then it returns the root
+        if (root == nullptr || root == p || root == q) { // Stopping case
+            return root;
+        }
+        // Search in the left and right subtrees, call the function until it finds the p and q or till it reaches null
+        TreeNode* left = lowestCommonAncestor(root -> left, p , q);
+        TreeNode* right = lowestCommonAncestor(root -> right, p, q);
+        
+        // if p and q are found on both side, current node is the lowest common ancestor.
+        if (left != nullptr && right != nullptr) {
+            return root;
+        }
+        
+        // if left side found p or q then return the left node otherwise just return the right node.
+        if (left != nullptr) {
+            return left;
+        }
+        else {
+            return right;
+        }
+        
+    }
+};
+
+// The time complexity is O(n) because it checks from the top to the target
+// The space complexity is also O(h) because it depends on the depth level
