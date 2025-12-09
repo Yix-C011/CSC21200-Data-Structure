@@ -1,0 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        return isValidBST(root, nullptr, nullptr); // When there is only root
+    }
+
+private:
+    bool isValidBST(TreeNode* root, TreeNode* leftptr, TreeNode* rightptr) {
+        if (root == NULL ) { // Stopping case, when the root is NULL
+            return true;
+        }
+        if (leftptr && root -> val <= leftptr -> val) { // Check if the left child is bigger or equal to its' parent
+            return false; 
+        }
+        if(rightptr && root -> val <= rightptr -> val) { // Check if the right child is smaller or equal to its' parent
+            return false;
+        }
+        return isValidBST(root -> left, leftptr, rightptr) && isValidBST(root -> right, root, rightptr); // Recursive call, check the new subtree when the root becomes the left child and when the root becomes the right child
+    }
+
+};
+
+// Time complexity is O(n) because it depends on the depth level
+// Space complexity is O(n) because it also depends on the depth level
