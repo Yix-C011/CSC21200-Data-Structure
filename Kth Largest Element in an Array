@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int, vector<int>, greater<>> minHeap; // smallest numerical value is on top of the heap
+        
+        for (const int num : nums) { // Going through each number in the array and pushing into heap
+            minHeap.push(num);
+            if (minHeap.size() > k) { // if heap size is greater than k then the smallest number will be pop until it reaches the kth largest element
+                minHeap.pop();
+            }
+        }
+        return minHeap.top(); // return the top of the heap, which will be the kth largest number
+    }
+};
+
+// The Big-O Notation is O(n log k), n is for inserting all the elements into the heap and the log k is for insertion.
+// The space complexity is O(k) because it stores the top k element.
